@@ -1,0 +1,4 @@
+interface:
+  display_name: "�N�������Ż�����Ǩ��"
+  short_description: "Ǩ�� A2/A3/A5 ����������ģ�������Ż�����ɲ��������Ŀ������"
+  default_prompt: "ʹ�� $ascend-infer-opt-migrate�������ЕN�������Ż�Ǩ�Ƶ�ָ��ģ���� A2/A3/A5 Ŀ�껷�����������졢������벢��֤���Ⱥ����ܡ�"
