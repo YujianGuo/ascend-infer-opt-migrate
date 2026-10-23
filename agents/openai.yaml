@@ -1,4 +1,4 @@
 interface:
   display_name: "昇腾推理优化方案迁移"
-  short_description: "迁移 A2/A3/A5 跨服务器与跨模型推理优化，完成差异分析和目标验收"
-  default_prompt: "使用 $ascend-infer-opt-migrate，将已有昇腾推理优化迁移到指定模型与 A2/A3/A5 目标环境，分析差异、适配代码并验证精度和性能。"
+  short_description: "迁移 A2/A3/A5 跨服务器、跨模型及 vLLM-Ascend 跨版本推理优化"
+  default_prompt: "使用 $ascend-infer-opt-migrate，将已有昇腾推理优化迁移到指定模型、A2/A3/A5 服务器或 vLLM-Ascend 版本，分析差异、适配代码并验证精度和性能。"

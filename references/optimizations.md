@@ -2,6 +2,8 @@
 
 先选择用户涉及的行，再读相关 skill。以运行时可见的已安装 skill 清单定位，读取对应 `SKILL.md`；不将本机绝对路径写入待迁移项目，不假设可调用其中提到的所有工具。
 
+九类优化均可跨 vLLM-Ascend 版本迁移。含版本变化时先读 [版本迁移指南](vllm-ascend-version.md)，对照目标已内置能力、vLLM 配对与接口差异，再执行下表的类型专项适配；版本迁移不是新增一种优化类型。
+
 | 优化类型 | 迁移时核对与改动 | 可复用的已有 skill | 验收重点 |
 |---|---|---|---|
 | 融合算子开发 | 子图语义、所有消费者、shape/dtype/layout、注册/绑定、tiling、数值和同步 | `model-infer-fusion`；符合方向时 `ascendc-cross-gen-port` / `ascendc-cross-gen-port-light`；按实现语言用 AscendC/Triton/TileLang 开发与验证 skill | 实际命中、算子精度、完整模型、目标关键路径与 E2E |
