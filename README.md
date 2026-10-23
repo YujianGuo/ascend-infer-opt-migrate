@@ -39,10 +39,16 @@ Skill 会固定源优化契约和目标基线，分析硬件与模型差异，�
 - [vllm-ascend-version.md](references/vllm-ascend-version.md)：版本配对、内置优化识别、接口映射、升级/回迁与目标版本验收。
 - [optimizations.md](references/optimizations.md)：九类优化和已有 Skill 路由。
 - [validation.md](references/validation.md)：目标端精度、性能、服务、PD 和回退验证。
+- [pitfalls.md](references/pitfalls.md)：路径归属、算子契约探针、补丁落地、会话卫生、噪声底与日志限制。
 - [openai.yaml](agents/openai.yaml)：客户端显示信息和默认调用提示。
 
 ## 依赖与验证边界
 
 这是面向编码代理的指令 Skill，不包含自动执行的迁移引擎或硬件测试脚本。按实际任务使用目标工程、对应昇腾开发 Skill 和版本匹配的官方资料；可选 Skill 缺失时使用核实过的工程接口继续。
 
-已完成 Skill 格式和本地引用检查，尚未执行 A2/A3/A5 实机迁移。编译通过、回退路径可运行和目标优化达到收益要求分别报告，不能互相替代。源端历史收益不能替代目标端同环境对照数据。
+已完成 Skill 格式和本地引用检查。`pitfalls.md` 及 `validation.md` 的归因/实验设计要求来自一次端到端实机迁移
+（vllm-ascend PR #12647 的 GDN prefill 融合算子接入 A2 + Qwen3.8-Flash-Next w8a8，8×910B3）：
+该案例中“改了文件不生效/日志不落盘/print 打断图编译/旧进程占显存/混合负载噪声大于效应”
+都实际发生过，并已按本清单定位解决。版本轴（V/HV/MV/HMV）与其它硬件方向尚未实机验证。
+编译通过、回退路径可运行和目标优化达到收益要求分别报告，不能互相替代。
+源端历史收益不能替代目标端同环境对照数据。
