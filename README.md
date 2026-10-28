@@ -42,10 +42,18 @@ Skill 会固定源优化契约和目标基线，分析硬件与模型差异，�
 - [pitfalls.md](references/pitfalls.md)：路径归属、算子契约探针、补丁落地、会话卫生、噪声底与日志限制。
 - [openai.yaml](agents/openai.yaml)：客户端显示信息和默认调用提示。
 
+可执行资产（模板，按目标工程改参数即可）：
+
+- [operator-contract-probe.py](assets/operator-contract-probe.py)：退化输入探针（布局 / head 映射 / 是否内部归一化）。
+- [bench-isolation.sh](assets/bench-isolation.sh)：隔离负载基准（prefill / decode / mixed），输出重复噪声。
+- [noise-floor-compare.py](assets/noise-floor-compare.py)：噪声底与跨配置差异比较，给出“噪声内/超出噪声”判定。
+- [migration-record.md](assets/migration-record.md)：最小迁移记录模板（含补丁自检与回退）。
+
 ## 依赖与验证边界
 
 这是面向编码代理的指令 Skill，不包含自动执行的迁移引擎或硬件测试脚本。按实际任务使用目标工程、对应昇腾开发 Skill 和版本匹配的官方资料；可选 Skill 缺失时使用核实过的工程接口继续。
 
+可执行资产是**模板**：算子签名、启动命令、指标名都需按目标工程改，不要直接当作通用驱动器。
 已完成 Skill 格式和本地引用检查。`pitfalls.md` 及 `validation.md` 的归因/实验设计要求来自一次端到端实机迁移
 （vllm-ascend PR #12647 的 GDN prefill 融合算子接入 A2 + Qwen3.8-Flash-Next w8a8，8×910B3）：
 该案例中“改了文件不生效/日志不落盘/print 打断图编译/旧进程占显存/混合负载噪声大于效应”

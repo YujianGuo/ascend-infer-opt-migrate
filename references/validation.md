@@ -26,6 +26,8 @@
 非确定模型（MoE 路由、投机解码、bf16 归约）先用**同一配置重复采样**测出模型噪声底，
 再判断跨配置差异；差异小于噪声底时不得判为精度回归，也不得用单次贪心文本差异下结论。
 算子级用目标 dtype 对应的 fp32 参考实现比对，误差应落在该 dtype 舍入量级。
+接口语义不清时先用退化输入探针实测（模板：[assets/operator-contract-probe.py](../assets/operator-contract-probe.py)），
+不把文档表述当作契约。
 
 ## 路径归因证据
 
@@ -53,6 +55,10 @@
 重复间差异估计测量噪声；效应量大于会话漂移才可下结论，否则报告“噪声内/证据不足”，
 不挑选最快样本。会话切换只改被测开关，启动脚本其余部分保持一致。
 
+现成模板（按目标框架替换请求命令即可）：
+[assets/bench-isolation.sh](../assets/bench-isolation.sh) 负责隔离负载与重复采样，
+[assets/noise-floor-compare.py](../assets/noise-floor-compare.py) 负责噪声底与跨配置差异比较。
+
 ## 性能与内存
 
 服务 readiness 完成后预热至稳态，剔除模型加载/编译；记录预热、样本数量、采集时段、随机种子和排除规则。NPU 微基准使用项目设备同步/事件计时或 profiler，不能只测 Python 异步提交耗时。Profiler 采集与不带 profiler 的 E2E 基准分开，保留原始日志/CSV/trace。
@@ -75,7 +81,7 @@ TPOT 使用 benchmark 的定义；若需自行计算，明确分母是否为首 
 
 ## 交付与失败恢复
 
-按用户交付形式提供相关文件/补丁与已有工程可执行的复现命令。代码交付不要求把分析报告加入代码 diff；迁移记录可独立保存或在回复中给出。
+按用户交付形式提供相关文件/补丁与已有工程可执行的复现命令。代码交付不要求把分析报告加入代码 diff；迁移记录可独立保存或在回复中给出。记录可直接填写 [assets/migration-record.md](../assets/migration-record.md)。
 
 最小迁移记录包含：
 
